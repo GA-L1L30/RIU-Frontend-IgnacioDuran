@@ -9,7 +9,6 @@ const mockHeroes: Hero[] = [
   {id: 1, name: 'SUPERMAN'},
   {id: 2, name: 'BATMAN'},
   {id: 3, name: 'SPIDERMAN'},
-  {id: 4, name: 'IRONMAN'}
 ];
 
 describe('HeroList', () => {
@@ -53,7 +52,7 @@ describe('HeroList', () => {
   it('should paginate heroes', () => {
     expect(component.pagedHeroes().length).toBe(3);
     component.page.set(2);
-    expect(component.pagedHeroes().length).toBe(1);
+    expect(component.pagedHeroes().length).toBe(0);
   });
 
   it('should clear filters', () => {

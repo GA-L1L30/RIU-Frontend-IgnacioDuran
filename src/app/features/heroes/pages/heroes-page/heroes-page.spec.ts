@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+import {OverlayModule} from '@angular/cdk/overlay';
 import {of} from 'rxjs';
 import {HeroesPage} from './heroes-page';
 import {HeroService} from '../../../../core/services/hero.service';
@@ -10,20 +11,17 @@ import {signal} from '@angular/core';
 describe('HeroesPage', () => {
   let component: HeroesPage;
   let fixture: ComponentFixture<HeroesPage>;
-  let mockDialog: jasmine.SpyObj<MatDialog>;
   let mockHeroService: jasmine.SpyObj<HeroService>;
 
   beforeEach(async () => {
-    mockDialog = jasmine.createSpyObj('MatDialog', ['open']);
     mockHeroService = jasmine.createSpyObj('HeroService', ['addHero', 'updateHero', 'deleteHero'], {
       heroes: signal([]),
       loading: signal(false)
     });
 
     await TestBed.configureTestingModule({
-      imports: [HeroesPage, NoopAnimationsModule],
+      imports: [HeroesPage, NoopAnimationsModule, MatDialogModule, OverlayModule],
       providers: [
-        {provide: MatDialog, useValue: mockDialog},
         {provide: HeroService, useValue: mockHeroService}
       ]
     }).compileComponents();
@@ -38,30 +36,21 @@ describe('HeroesPage', () => {
   });
 
   it('should open add dialog', () => {
-    const mockDialogRef = {afterClosed: () => of(null)};
-    mockDialog.open.and.returnValue(mockDialogRef as any);
-
+    spyOn(component['dialog'], 'open').and.returnValue({afterClosed: () => of(null)} as any);
     component.onAdd();
-
-    expect(mockDialog.open).toHaveBeenCalled();
+    expect(component['dialog'].open).toHaveBeenCalled();
   });
 
   it('should open edit dialog', () => {
+    spyOn(component['dialog'], 'open').and.returnValue({afterClosed: () => of(null)} as any);
     const hero: Hero = {id: 1, name: 'Superman'};
-    const mockDialogRef = {afterClosed: () => of(null)};
-    mockDialog.open.and.returnValue(mockDialogRef as any);
-
     component.onEdit(hero);
-
-    expect(mockDialog.open).toHaveBeenCalled();
+    expect(component['dialog'].open).toHaveBeenCalled();
   });
 
   it('should open delete dialog', () => {
-    const mockDialogRef = {afterClosed: () => of(false)};
-    mockDialog.open.and.returnValue(mockDialogRef as any);
-
+    spyOn(component['dialog'], 'open').and.returnValue({afterClosed: () => of(false)} as any);
     component.onDeleteHero(1);
-
-    expect(mockDialog.open).toHaveBeenCalled();
+    expect(component['dialog'].open).toHaveBeenCalled();
   });
 });

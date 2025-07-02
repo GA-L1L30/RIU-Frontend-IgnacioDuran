@@ -1,1 +1,22 @@
-<p>hero-form works!</p>
+<form (ngSubmit)="onSubmit()" autocomplete="off">
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>Nombre</mat-label>
+    <input
+      matInput
+      id="name"
+      type="text"
+      [formControl]="nameControl"
+      (blur)="touched.set(true)"
+      appUppercaseDirective
+      required
+    />
+    @if (nameError()) {
+      <mat-error>{{ nameError() }}</mat-error>
+    }
+  </mat-form-field>
+
+  <div class="action-section">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!nameValid()">Guardar</button>
+    <button mat-stroked-button type="button" (click)="onCancel()">Cancelar</button>
+  </div>
+</form>

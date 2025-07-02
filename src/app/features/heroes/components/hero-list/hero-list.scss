@@ -1,0 +1,30 @@
+.pagination-container {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: right;
+}
+
+table {
+  text-align-last: center;
+}
+
+.action-section {
+  button {
+    margin-inline-end: 15px;
+  }
+}
+
+.filters-container {
+  margin: 16px;
+  display: flex;
+  justify-content: space-between;
+
+  .input-filters {
+    display: flex;
+    gap: 20px;
+  }
+}
+
+

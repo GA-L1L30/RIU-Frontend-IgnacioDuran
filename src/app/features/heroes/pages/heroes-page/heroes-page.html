@@ -1,1 +1,9 @@
-<p>heroes-page works!</p>
+<div class="header-container">
+  <h1>Listado de Heroes</h1>
+  <button mat-stroked-button color="primary" (click)="onAdd()">Añadir héroe</button>
+</div>
+
+<app-hero-list
+  (editHeroEvent)="onEdit($event)"
+  (deleteHeroEvent)="onDeleteHero($event)"
+></app-hero-list>
